@@ -32,15 +32,22 @@ int main()
 
     for (int t = 0; t < 1000000; t++) 
     {
+        for (int i = 0; i < all_objects.size(); i++) 
+        {
+            all_objects[i].drawSelf();
+        }
+
         renderFrame();
 
         this_thread::sleep_for(32ms);
     }
 } 
 
+vector<GameObject> all_objects;
+
 void space() //Create objects here
 {
-    GameObject obj1("Rectangle", vec2(3, 3), vec2(5, 5));
+    GameObject obj1("Rectangle", "rect", vec2(3, 3), vec2(5, 5));
 }
 
 vector<vec2> light_pixels;

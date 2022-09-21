@@ -5,13 +5,21 @@
 #include "2DRenderer.h"
 #include "Graphics.h"
 
-GameObject::GameObject(string _name, vec2 _pos, vec2 _scale)
+GameObject::GameObject(string _name, string _spr, vec2 _pos, vec2 _scale)
 {
 	name = _name;
+	sprite = _spr;
 	position = _pos;
 	scale = _scale;
 	
-	drawSelf(position, scale);
+	all_objects.push_back(*this);
+
+	drawSelf();
+}
+
+void GameObject::drawSelf()
+{
+	if(sprite == "rect") graphics.drawRect(position, scale);
 }
 
 void GameObject::move(vec2 dir)
@@ -19,13 +27,3 @@ void GameObject::move(vec2 dir)
 	position += dir;
 }
 
-using namespace std;
-
-void drawSelf(vec2 _pos, vec2 _scale) 
-{
-	/*for (int t = 0; t < 1000000; t++)
-	{
-		graphics.drawRect(_pos, _scale);
-		this_thread::sleep_for(32ms);
-	}*/
-}
