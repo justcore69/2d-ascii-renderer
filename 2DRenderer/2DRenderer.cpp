@@ -1,25 +1,46 @@
-﻿#include <iostream>
+﻿/*
+
+// - Basic 2D ASCII renderer
+// - Copyright (c) JustCore 2022
+// - Free to commercial use
+// - Thank you for using!
+
+*/
+
+#include <iostream>
 #include <string>
 #include <vector>
+#include <chrono>
+#include <thread>
 #include <glm/glm.hpp>
 #include <glm/vec2.hpp>
+
+#include"GameObject.h"
+#include"2DRenderer.h"
 
 using namespace std;
 using namespace glm;
 
+void space();
 void renderFrame();
-void drawGraphics();
-void drawRect(vec2 pos, vec2 scale);
+
+constexpr std::chrono::nanoseconds timestep(16ms);
 
 int main()
 {
-    drawGraphics();
-    renderFrame();
-}
+    space();
 
-void drawGraphics()
+    for (int t = 0; t < 1000000; t++) 
+    {
+        renderFrame();
+
+        this_thread::sleep_for(32ms);
+    }
+} 
+
+void space() //Create objects here
 {
-    drawRect(vec2(1, 1), vec2(5, 5));
+    GameObject obj1("Rectangle", vec2(3, 3), vec2(5, 5));
 }
 
 vector<vec2> light_pixels;
@@ -58,20 +79,10 @@ void renderFrame()
         frame += line + '\n';
     }
 
+    frame += "\n\n\n\n\n\n\n\n\n";
+
     cout << frame;
     frame.clear();
     light_pixels.clear();
-}
-
-void drawRect(vec2 pos, vec2 scale) 
-{
-    for (int y = pos.y; y < pos.y + scale.y; y++)
-    {
-        for (int x = pos.x; x < pos.x + scale.x*2 ; x++)
-        {
-            vec2 pix = vec2(x, y);
-            light_pixels.push_back(pix);
-        }
-    }
 }
 
